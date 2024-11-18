@@ -14,6 +14,7 @@ function Game() {
   let [winText, setWinText] = useState("");
   let [showChoices, setShowChoices] = useState(true);
   let [showResult, setShowResult] = useState(false);
+  let [playAgain, setPlayAgain] = useState(false);
 
   function getRandomChoice() {
     let choices = ["rock", "paper", "scissors"];
@@ -26,6 +27,14 @@ function Game() {
       determineWinner(humanChoice, aiChoice);
     }
   }, [aiChoice, humanChoice])
+
+  useEffect(() => {
+    if(humanScore === 5 || aiScore === 5) {
+      setShowChoices(true);
+      setShowResult(true);
+      setPlayAgain(true);
+    }
+  }, [humanScore, aiScore])
 
   function determineWinner() {
     if (humanChoice === aiChoice) {
@@ -75,6 +84,10 @@ function Game() {
     setShowResult(false);
   }
 
+  function playAgainFunc() {
+    restart();
+  }
+
   return (
     <div className="game">
       <Score aiScore={aiScore} humanScore={humanScore} />
@@ -102,6 +115,11 @@ function Game() {
           <div className="result-buttons">
             <button onClick={() => restart()}>Restart</button>
             <button onClick={() => nextRound()}>Next Round</button>
+            {
+              playAgain && <div>
+                <button onClick={() => playAgainFunc()}>Play Again</button>
+              </div>
+            }
           </div>
         </div>
       )}
