@@ -160,22 +160,52 @@
   animation: shake-human 1.2s ease 3;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .game {
     scale: 0.8;
+  }
+
+  .result-buttons {
+    scale: 1.2;
   }
 
   .hands {
     position: relative;
     display: flex;
-    height: 75vh;
     justify-content: space-between;
+    scale: 1.2;
   }
 
   .hands img {
-
-    margin-top: 50%;
+    margin-top: 40%;
     width: 200px;
     height: 50vh;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .game {
+    scale: 0.7;
+  }
+
+  .result-buttons {
+    scale: 1.4;
+  }
+
+  .hands {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    scale: 1.4;
+  }
+
+  .hands .ai-hand {
+    margin-left: -2%;
+  }
+
+  .hands img {
+    margin-top: 50%;
+    width: 150px;
+    height: 30vh;
   }
 }
