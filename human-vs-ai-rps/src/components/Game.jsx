@@ -6,66 +6,73 @@ import paperHandButton from "../assets/paper-human-button.png";
 import scissorsHandButton from "../assets/scissors-human-button.png";
 
 function Game() {
-  let [humanChoice, setHumanChoice] = useState(null);
-  let [aiChoice, setAiChoice] = useState(null);
-  let [humanScore, setHumanScore] = useState(0);
-  let [aiScore, setAiScore] = useState(0);
-  let [result, setResult] = useState("");
-  let [winText, setWinText] = useState("");
-  let [showChoices, setShowChoices] = useState(true);
-  let [showResult, setShowResult] = useState(false);
-  let [playAgain, setPlayAgain] = useState(false);
+  const [humanChoice, setHumanChoice] = useState(null);
+  const [aiChoice, setAiChoice] = useState(null);
+  const [humanScore, setHumanScore] = useState(0);
+  const [aiScore, setAiScore] = useState(0);
+  const [result, setResult] = useState("");
+  const [winText, setWinText] = useState("");
+  const [showChoices, setShowChoices] = useState(true);
+  const [showResult, setShowResult] = useState(false);
+  const [playAgain, setPlayAgain] = useState(false);
+  const [shakeAnimation, setShakeAnimation] = useState(false);
 
   function getRandomChoice() {
-    let choices = ["rock", "paper", "scissors"];
-    let randomIndex = Math.floor(Math.random() * choices.length);
+    const choices = ["rock", "paper", "scissors"];
+    const randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
   }
 
   useEffect(() => {
     if (humanChoice !== null && aiChoice !== null) {
-      determineWinner(humanChoice, aiChoice);
+      setShakeAnimation(true);
+      setShowChoices(false); // Hide buttons
+      setTimeout(() => {
+        setShakeAnimation(false);
+        determineWinner();
+      }, 1500);
     }
-  }, [aiChoice, humanChoice])
+  }, [aiChoice, humanChoice]);
 
   useEffect(() => {
-    if(humanScore === 5 || aiScore === 5) {
+    if (humanScore === 5 || aiScore === 5) {
       setShowChoices(true);
       setShowResult(true);
       setPlayAgain(true);
     }
-  }, [humanScore, aiScore])
+  }, [humanScore, aiScore]);
 
   function determineWinner() {
-    if (humanChoice === aiChoice) {
-      setWinText("It's A Tie!");
-      setShowResult(true);
-      return "tie";
-    } else if (
-      (humanChoice === "rock" && aiChoice === "scissors") ||
-      (humanChoice === "paper" && aiChoice === "rock") ||
-      (humanChoice === "scissors" && aiChoice === "paper")
-    ) {
-      setShowResult(true);
-      setHumanScore(humanScore + 1);
-      setWinText("You Win!");
-      return "human";
-    } else if (
-      (aiChoice === "rock" && humanChoice === "scissors") ||
-      (aiChoice === "paper" && humanChoice === "rock") ||
-      (aiChoice === "scissors" && humanChoice === "paper")
-    ) {
-      setShowResult(true);
-      setAiScore(aiScore + 1);
-      setWinText("AI Wins!");
-      return "ai";
-    }
+    setTimeout(() => {
+      if (humanChoice === aiChoice) {
+        setWinText("It's A Tie!");
+        setShowResult(true);
+        return "tie";
+      } else if (
+        (humanChoice === "rock" && aiChoice === "scissors") ||
+        (humanChoice === "paper" && aiChoice === "rock") ||
+        (humanChoice === "scissors" && aiChoice === "paper")
+      ) {
+        setShowResult(true);
+        setHumanScore(humanScore + 1);
+        setWinText("You Win!");
+        return "human";
+      } else if (
+        (aiChoice === "rock" && humanChoice === "scissors") ||
+        (aiChoice === "paper" && humanChoice === "rock") ||
+        (aiChoice === "scissors" && humanChoice === "paper")
+      ) {
+        setShowResult(true);
+        setAiScore(aiScore + 1);
+        setWinText("AI Wins!");
+        return "ai";
+      }
+    }, 1000)
   }
 
   function choice(choice) {
     setHumanChoice(choice);
     setAiChoice(getRandomChoice());
-    setResult(determineWinner(humanChoice, aiChoice));
   }
 
   function restart() {
@@ -91,7 +98,11 @@ function Game() {
   return (
     <div className="game">
       <Score aiScore={aiScore} humanScore={humanScore} />
-      <Hands aiHand={aiChoice} humanHand={humanChoice} />
+      <Hands
+        aiHand={shakeAnimation ? "rock" : aiChoice}
+        humanHand={shakeAnimation ? "rock" : humanChoice}
+        shake={shakeAnimation}
+      />
       {showChoices && (
         <div className="buttons">
           <button className="button" onClick={() => choice("rock")}>
@@ -115,11 +126,11 @@ function Game() {
           <div className="result-buttons">
             <button onClick={() => restart()}>Restart</button>
             <button onClick={() => nextRound()}>Next Round</button>
-            {
-              playAgain && <div>
+            {playAgain && (
+              <div>
                 <button onClick={() => playAgainFunc()}>Play Again</button>
               </div>
-            }
+            )}
           </div>
         </div>
       )}

@@ -9,11 +9,13 @@
   background-color: #9dcaff;
   position: relative;
   overflow: hidden;
+  height: 100vh;
 }
 
 .game {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .score {
@@ -105,7 +107,7 @@
   align-items: center;
   color: white;
   font-size: 80px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(3px);
   text-align: center;
 }
 
@@ -122,4 +124,37 @@
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
     transition: all 0.2s ease-in-out;
   }
+}
+
+
+/* Add this CSS to your stylesheet */
+
+@keyframes shake-ai {
+  0%, 100% {
+    transform: translate(0, 0);
+    rotate: 40deg;
+  }
+  50%{
+    transform: translate(10px, 10px);
+    rotate: 80deg;
+  }
+}
+
+@keyframes shake-human {
+  0%, 100% {
+    transform: translate(0, 0), scaleX(-1);
+    rotate: -40deg;
+  }
+  50%{
+    transform: translate(10px, 10px), scaleX(-1);
+    rotate: -80deg;
+  }
+}
+
+.shake-ai {
+  animation: shake-ai 1.2s ease 3;
+}
+
+.shake-human {
+  animation: shake-human 1.2s ease 3;
 }
