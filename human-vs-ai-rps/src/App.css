@@ -86,12 +86,12 @@
 }
 
 .ai-hand {
-  height: 80vh;
+  height: 85vh;
   transform: rotate(50deg);
 }
 
 .human-hand {
-  height: 80vh;
+  height: 85vh;
   transform: scaleX(-1);
   rotate: -50deg;
 }
@@ -126,26 +126,27 @@
   }
 }
 
-
 /* Add this CSS to your stylesheet */
 
 @keyframes shake-ai {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
     rotate: 40deg;
   }
-  50%{
+  50% {
     transform: translate(10px, 10px);
     rotate: 80deg;
   }
 }
 
 @keyframes shake-human {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0), scaleX(-1);
     rotate: -40deg;
   }
-  50%{
+  50% {
     transform: translate(10px, 10px), scaleX(-1);
     rotate: -80deg;
   }
@@ -157,4 +158,24 @@
 
 .shake-human {
   animation: shake-human 1.2s ease 3;
+}
+
+@media screen and (max-width: 800px) {
+  .game {
+    scale: 0.8;
+  }
+
+  .hands {
+    position: relative;
+    display: flex;
+    height: 75vh;
+    justify-content: space-between;
+  }
+
+  .hands img {
+
+    margin-top: 50%;
+    width: 200px;
+    height: 50vh;
+  }
 }
