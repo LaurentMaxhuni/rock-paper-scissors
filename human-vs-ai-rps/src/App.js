@@ -1,10 +1,18 @@
 import Game from "./components/Game.jsx";
 import "./App.css";
+import NamePrompt from "../src/components/NamePrompt.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
+
 function App() {
   return (
-    <div className="App">
-      <Game />
-    </div>
+    <Router> 
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<NamePrompt />} />
+          <Route path="/game" element={<Game />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
