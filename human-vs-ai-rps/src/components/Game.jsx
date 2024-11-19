@@ -26,7 +26,7 @@ function Game() {
   useEffect(() => {
     if (humanChoice !== null && aiChoice !== null) {
       setShakeAnimation(true);
-      setShowChoices(false); // Hide buttons
+      setShowChoices(false);
       setTimeout(() => {
         setShakeAnimation(false);
         determineWinner();
